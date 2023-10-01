@@ -10,10 +10,11 @@ export const HomeStyle = StyleSheet.create({
     flex: 1,
   },
   componentTwo: {
-    height: 60,
-    backgroundColor: "blue",
+    height: 40,
+    backgroundColor: "#b50096",
     justifyContent: "center",
     alignItems: "center",
+    borderRadius: 10,
   },
   // Home Item style
   homeItemContainer: {

@@ -3,7 +3,7 @@ import React from "react";
 import { HomeStyle } from "../styles/HomeStyle";
 import { useNavigation } from "@react-navigation/native";
 
-const HomeItem = ({ item }) => {
+const ListItem = ({ item }) => {
   const navigation = useNavigation();
 
   return (
@@ -19,22 +19,22 @@ const HomeItem = ({ item }) => {
         style={HomeStyle.homeItemImg}
       />
       <View style={HomeStyle.HomeItemTextContainer}>
-        <Text style={HomeStyle.HomeItemText_id}>{item?.id || "00"}</Text>
+        <Text style={HomeStyle.HomeItemText_id}>{item?.id}</Text>
 
         <Text style={HomeStyle.HomeItemTitle}>
-          {item?.yoast_head_json?.title || "Title"}
+          {item?.yoast_head_json?.title}
         </Text>
 
         <Text style={HomeStyle.HomeItemText}>
-          {item?.date.split("T")[0].split("-")[0] +
+          {item?.date?.split("T")[0]?.split("-")[0] +
             "-" +
-            item?.date.split("T")[0].split("-")[1] +
+            item?.date?.split("T")[0]?.split("-")[1] +
             "-" +
-            item?.date.split("T")[0].split("-")[2] || "02"}
+            item?.date?.split("T")[0]?.split("-")[2] || ""}
         </Text>
       </View>
     </TouchableOpacity>
   );
 };
 
-export default React.memo(HomeItem);
+export default React.memo(ListItem);
