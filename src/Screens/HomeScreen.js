@@ -5,7 +5,7 @@ const HomeScreen = () => {
     <ListComponent
       post_type="event"
       per_page="10"
-      fields="id,title,[acf]date,_embedded['wp:featuredmedia'][0].media_details.sizes.thumbnail.source_url"
+      fields="id,title,acf.date,_links.wp:featuredmedia,_embedded.wp:featuredmedia"
     />
   );
 };

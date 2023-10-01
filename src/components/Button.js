@@ -14,13 +14,15 @@ const Button = ({ title, bgcolour, ListComponent, ...props }) => {
       <Text
         style={{
           fontWeight: "bold",
-          fontSize: 20,
+          fontSize: 15,
           margin: 10,
           color: "white",
           textAlign: "center",
         }}
       >
         {title}
+        {"\n"}
+        {"Press to Retry"}
       </Text>
     </TouchableOpacity>
   );
