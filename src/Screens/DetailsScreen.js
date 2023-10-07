@@ -5,7 +5,7 @@ import DetailsComponent from "../components/DetailsComponent";
 const DetailsScreen = ({ route }) => {
   const { id } = route.params;
 
-  return <DetailsComponent id={id} post_type="event" fields="id,title" />;
+  return <DetailsComponent id={id} post_type="event" fields="id,title,acf" />;
 };
 
 export default DetailsScreen;

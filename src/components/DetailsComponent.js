@@ -8,12 +8,13 @@ import {
   Text,
   View,
   useWindowDimensions,
+  Linking,
 } from "react-native";
 import RenderHtml from "react-native-render-html";
 import Button from "../components/Button";
 import { DetailStyle } from "../styles/DetailStyle";
 import { acfToDate } from "../utils/DateSplitter";
-import { useNavigation } from "@react-navigation/native";
+import { Link, useNavigation } from "@react-navigation/native";
 import SkeletonPlaceholder from "expo-react-native-skeleton-placeholder";
 
 const DetailsComponent = ({ post_type, id, fields }) => {
@@ -45,6 +46,8 @@ const DetailsComponent = ({ post_type, id, fields }) => {
           },
         }
       );
+
+      console.log("data is here", response.data);
       setResponse(response.data);
     } catch (err) {
       setError(err);
@@ -67,13 +70,12 @@ const DetailsComponent = ({ post_type, id, fields }) => {
   const windowDimensions = useWindowDimensions();
 
   const RecallApi = () => {
-    if (!loading) {
-      console.log("recall api");
+    if (!loading && !error && Response?.acf?.link) {
+      Linking.openURL(Response?.acf?.link || "");
+    } else if (error) {
       fetchDetails();
-    } else if (!loading && !error) {
-      navigation.navigate("webview", {
-        url: Response?.acf?.booking_link || "",
-      });
+    } else if (error?.message === "No Internet Connection") {
+      fetchDetails();
     }
   };
 
@@ -179,7 +181,7 @@ const DetailsComponent = ({ post_type, id, fields }) => {
           loading
             ? "Loading..."
             : error
-            ? "Try Again"
+            ? "An Error Occured "
             : error?.message === "No Internet Connection"
             ? "No Internet Connection"
             : "More infomation / Book"
@@ -187,7 +189,7 @@ const DetailsComponent = ({ post_type, id, fields }) => {
         bgcolour={
           error
             ? "#c20f08"
-            : error?.message === "No Internet Connection"
+            : error?.message === "No Internet Connection, Click to retry"
             ? "#c20f08"
             : loading
             ? "#218834"

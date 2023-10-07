@@ -1,3 +1,5 @@
+//@ts-check
+
 import NetInfo from "@react-native-community/netinfo";
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
@@ -13,12 +15,12 @@ const ListComponent = ({ per_page = 10, post_type, fields }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [page, setPage] = useState(1);
-  const [isLastPageReached, setIsLastPageReached] = useState(false);
+  const [lastPage, setLastPage] = useState(1);
 
   const { isConnected = true } = NetInfo.useNetInfo();
 
   const fetchData = async () => {
-    if ((isLastPageReached && page !== 1) || loading) return;
+    if (page > lastPage) return;
 
     try {
       setError(null);
@@ -42,15 +44,15 @@ const ListComponent = ({ per_page = 10, post_type, fields }) => {
             per_page: per_page,
             page: page,
             _fields: fields,
-            act_format: "standard",
+            acf_format: "standard",
             _embed: true,
           },
         }
       );
 
-      // if (response.data.length < 10) {
-      //   // setIsLastPageReached(true);
-      // }
+      const totalPages = response.headers["x-wp-totalpages"];
+      console.log("totalPages", totalPages);
+      setLastPage((prevLastPage) => (totalPages ? totalPages : prevLastPage));
 
       if (page === 1) {
         setData(response.data);
@@ -100,10 +102,7 @@ const ListComponent = ({ per_page = 10, post_type, fields }) => {
   };
 
   const onEndReached = () => {
-    console.log(
-      `reach end page ${page} and loading ${loading},end reached ${isLastPageReached}`
-    );
-    if (!isLastPageReached && !loading) {
+    if (page <= lastPage && !loading) {
       console.log("onEndReached activated", page);
       setPage((prevPage) => prevPage + 1);
       fetchData();
@@ -117,6 +116,8 @@ const ListComponent = ({ per_page = 10, post_type, fields }) => {
         initialNumToRender={per_page}
         refreshing={loading}
         onRefresh={onRefresh}
+        scrollIndicatorInsets={{ top: 1 }}
+        showsVerticalScrollIndicator={false}
         onEndReachedThreshold={0.5}
         keyExtractor={(item) => `${item.id}-${item.title.rendered}`}
         onEndReached={onEndReached}

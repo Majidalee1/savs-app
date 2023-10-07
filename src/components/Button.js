@@ -21,8 +21,6 @@ const Button = ({ title, bgcolour, ListComponent, ...props }) => {
         }}
       >
         {title}
-        {"\n"}
-        {"Press to Retry"}
       </Text>
     </TouchableOpacity>
   );

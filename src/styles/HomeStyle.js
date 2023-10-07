@@ -19,6 +19,7 @@ export const HomeStyle = StyleSheet.create({
   // Home Item style
   homeItemContainer: {
     marginBottom: 20,
+    width: "100%",
     backgroundColor: "#fff",
     borderRadius: 10,
     overflow: "hidden",
@@ -39,6 +40,7 @@ export const HomeStyle = StyleSheet.create({
   },
   HomeItemTextContainer: {
     paddingRight: 10,
+    width: "70%",
     flexDirection: "column",
     justifyContent: "space-between",
     flexShrink: 1,
@@ -56,7 +58,6 @@ export const HomeStyle = StyleSheet.create({
   HomeItemText_id: {
     fontSize: 13,
     alignSelf: "flex-end",
-
     fontWeight: "500",
     color: "#999",
   },
